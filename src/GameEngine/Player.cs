@@ -1,38 +1,42 @@
 ﻿using GameEngine.Math;
+using GameEngine.Models;
 using System;
+using System.Collections.Generic;
 
 namespace GameEngine
 {
    public class Player
    {
+      public List<ClosedCoordinates> Moves = new List<ClosedCoordinates>();
+      public string Name { get; }
       public Guid MoveId { get; private set; }
       public ClosedCoordinates Coordinates { get; set; }
       public readonly Vector Direction;
-      public Player(World world, ClosedCoordinates startingPoint, Vector direction)
+      public Player(World world, ClosedCoordinates startingPoint, Vector direction, string name)
       {
          Coordinates = startingPoint;
          World = world;
          Direction = direction;
+         Name = name;
+         Moves.Add(startingPoint);
       }
 
       public World World { get; }
-      public ClosedCoordinates NextRandomCoordinate(Vector direction, ClosedCoordinates origin)
-      {
-         return origin;
-      }
+
       public void Act(ActAction actAction)
       {
-
-         // set your mark on the world arround you
+         // Set your mark on the world around you
+         actAction.Act(this);
 
       }
-      public void Move(Guid moveId)
+      public void Move(ActAction moveAction)
       {
-         MoveId = moveId;
          // move
-         Coordinates = NextRandomCoordinate(Direction, Coordinates);
+
+         Coordinates = moveAction.Move(this);
+         Moves.Add(Coordinates);
+
          // interact with surroundings
-         // 
       }
    }
 }

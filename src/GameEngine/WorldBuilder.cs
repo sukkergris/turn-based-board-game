@@ -14,7 +14,7 @@ namespace GameEngine
          var xaxis = Enumerable.Range(0, (int)x);
          var yaxis = Enumerable.Range(0, (int)y);
 
-         var coordinates = xaxis.SelectMany(x => yaxis.Select(y => new ClosedCoordinates(XCoordinate.Create( (uint)x),YCoordinate.Create( (uint)y))));
+         var coordinates = xaxis.SelectMany(x => yaxis.Select(y => new ClosedCoordinates(XCoordinate.Create((uint)x), YCoordinate.Create((uint)y)))).ToArray();
 
          _world.Squares = coordinates.ToDictionary(coordinate => coordinate, coordinate => new SquareBuilder().Build(coordinate));
 

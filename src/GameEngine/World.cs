@@ -46,20 +46,21 @@ namespace GameEngine
       public KeyValuePair<ClosedCoordinates, Square>[] FilterForCartesianDisplay(Dictionary<ClosedCoordinates, Square> coordinates, ClosedCartesianCoordinateSystem coordinateSystem)
       {
          var x = coordinateSystem.XLength;
-         List<KeyValuePair<ClosedCoordinates, Square>> filtered = new List<KeyValuePair<ClosedCoordinates, Square>>();
+         List<KeyValuePair<ClosedCoordinates, Square>[]> filtered = new List<KeyValuePair<ClosedCoordinates, Square>[]>();
          for (int i = 0; i < x; i++)
          {
             var selected = coordinates.Where((c, iterator) => iterator % x == i).ToArray();
-            filtered.AddRange(selected);
+            filtered.Add(selected);
          }
-         return filtered.ToArray();
+         filtered.Reverse();
+         return filtered.SelectMany(c => c).ToArray();
       }
       private string PrintRow(KeyValuePair<ClosedCoordinates, Square>[] row)
       {
          string output = string.Empty;
          foreach (var (_, square) in row)
          {
-            output += $"|x:{square.Coordinates.X.Value},y:{square.Coordinates.Y.Value}|";
+            output += $"|x:{square.Coordinates.X.Value},y:{square.Coordinates.Y.Value}| {square.ActionInfo} | ";
          }
 
          output += "\n";
