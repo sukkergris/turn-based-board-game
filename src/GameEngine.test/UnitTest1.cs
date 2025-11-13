@@ -9,13 +9,13 @@ namespace GameEngine.test
       public void Test1()
       {
          var sut = new WorldBuilder().Build(3, 3);
-         var shouldBeZero = sut.CoordinateSystem.AutoCorrectCoordinate(0, (int)sut.XAxisCount);
+         var shouldBeZero = sut.CoordinateSystem.AutoCorrectCoordinate(0, (int)sut.CoordinateSystem.XLength);
          Assert.Equal(0, shouldBeZero);
-         var shouldBeZero2 = sut.CoordinateSystem.AutoCorrectCoordinate(8, (int)sut.YAxisCount);
+         var shouldBeZero2 = sut.CoordinateSystem.AutoCorrectCoordinate(8, (int)sut.CoordinateSystem.YLength);
          Assert.Equal(0, shouldBeZero2);
-         var shouldBeOne = sut.CoordinateSystem.AutoCorrectCoordinate(1, (int)sut.XAxisCount);
+         var shouldBeOne = sut.CoordinateSystem.AutoCorrectCoordinate(1, (int)sut.CoordinateSystem.XLength);
          Assert.Equal(1, shouldBeOne);
-         var shouldBeSeven = sut.CoordinateSystem.AutoCorrectCoordinate(-1, (int)sut.YAxisCount);
+         var shouldBeSeven = sut.CoordinateSystem.AutoCorrectCoordinate(-1, (int)sut.CoordinateSystem.YLength);
          Assert.Equal(7, shouldBeSeven);
       }
       [Fact]
@@ -32,7 +32,7 @@ namespace GameEngine.test
          var world = new WorldBuilder().Build(3, 3);
          var sut = new Engine(world);
          sut.Initialize();
-         sut.Play();
+         var rendered = sut.Render(world);
       }
    }
 }

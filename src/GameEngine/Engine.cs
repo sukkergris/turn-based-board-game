@@ -42,7 +42,10 @@ namespace GameEngine
             loopCount--;
          }
       }
-      public void Render(World world) { }
+      public string Render(World world)
+      {
+         return world.Display();
+      }
       public void Play() { }
    }
 }

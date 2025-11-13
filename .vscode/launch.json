@@ -1,0 +1,26 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C#: WorldSimulator Debug",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/src/WorldSimulator/WorldSimulator.csproj"
+    },
+    {
+      "name": "C#: GameEngine Debug",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/src/GameEngine/Engine.fsproj"
+    },
+    {
+      "name": "Debug Tests",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/src/GameEngine.test/GameEngine.test.csproj"
+    }
+  ]
+}
