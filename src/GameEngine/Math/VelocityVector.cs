@@ -8,9 +8,9 @@ namespace GameEngine.Math
 {
     public class VelocityVector
     {
-      public readonly Coordinate Start;
-      public readonly Coordinate End;
-      public VelocityVector(Coordinate start, Coordinate end)
+      public readonly ClosedCoordinates Start;
+      public readonly ClosedCoordinates End;
+      public VelocityVector(ClosedCoordinates start, ClosedCoordinates end)
       {
          Start = start;
          End = end;

@@ -43,5 +43,6 @@ namespace GameEngine
          }
       }
       public void Render(World world) { }
+      public void Play() { }
    }
 }

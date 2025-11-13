@@ -6,15 +6,13 @@ namespace GameEngine
    public class WorldBuilder
    {
       private World _world;
-      public World Build()
+      public World Build(uint x, uint y)
       {
-         uint xaxisCount = 8;
-         uint yaxisCount = 8;
-         var closedCartesianCoordinateSystem = new ClosedCartesianCoordinateSystem(xaxisCount,yaxisCount);
+         var closedCartesianCoordinateSystem = new ClosedCartesianCoordinateSystem(x, y);
          _world = new World(closedCartesianCoordinateSystem);
 
-         var xaxis = Enumerable.Range(0, (int)xaxisCount);
-         var yaxis = Enumerable.Range(0, (int)yaxisCount);
+         var xaxis = Enumerable.Range(0, (int)x);
+         var yaxis = Enumerable.Range(0, (int)y);
 
          var coordinates = xaxis.SelectMany(x => yaxis.Select(y => new ClosedCoordinates(XCoordinate.Create( (uint)x),YCoordinate.Create( (uint)y))));
 
