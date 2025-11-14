@@ -16,25 +16,42 @@ namespace GameEngine
 
       public ClosedCoordinates[] GetSurroundingCoordinates(ClosedCoordinates c)
       {
-         var xcoordinates = new int[3] {
-            CoordinateSystem.AutoCorrectXCoordinate(-1 + (int)c.X.Value),
-            (int)c.X.Value,
-            CoordinateSystem.AutoCorrectYCoordinate((int)c.X.Value + 1)
-         };
-         var ycoordinates = new int[3] {
-            CoordinateSystem.AutoCorrectXCoordinate((int)c.Y.Value - 1),
-            (int)c.Y.Value,
-            CoordinateSystem.AutoCorrectYCoordinate((int)c.Y.Value + 1)
-         };
+         var surroundingCoords = new List<ClosedCoordinates>();
+         var centerX = (int)c.X.Value;
+         var centerY = (int)c.Y.Value;
 
-         var coordinates = xcoordinates.SelectMany(x => ycoordinates.Select(y =>
-            ClosedCoordinates.Create((uint)x, (uint)y)
-         )).ToArray();
-         return coordinates;
+         // Generate all 8 surrounding coordinates (3x3 grid minus center)
+         for (int deltaX = -1; deltaX <= 1; deltaX++)
+         {
+            for (int deltaY = -1; deltaY <= 1; deltaY++)
+            {
+               // Skip the center coordinate
+               if (deltaX == 0 && deltaY == 0)
+                  continue;
+
+               var newX = CoordinateSystem.AutoCorrectXCoordinate(centerX + deltaX);
+               var newY = CoordinateSystem.AutoCorrectYCoordinate(centerY + deltaY);
+
+               surroundingCoords.Add(ClosedCoordinates.Create((uint)newX, (uint)newY));
+            }
+         }
+
+         return surroundingCoords.ToArray();
       }
-      public string Display()
+      public string Display() => Display(new ClosedCoordinates[0]);
+
+      public string Display(ClosedCoordinates[] squares)
       {
          string output = "Board:\n\n";
+
+         foreach (var plot in squares)
+         {
+            var square = Squares.First(s => s.Key == plot);
+
+            square.Value.ActionInfo = "X-Mark the spot";
+
+         }
+
          foreach (KeyValuePair<ClosedCoordinates, Square>[] row in FilterForCartesianDisplay(Squares, CoordinateSystem).Chunk((int)CoordinateSystem.XLength))
          {
             output += PrintRow(row.ToArray());

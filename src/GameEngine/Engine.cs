@@ -46,14 +46,18 @@ namespace GameEngine
                player.Move(action);
                player.Act(action);
             }
-            if (false)
+            if (true)
             {
                // Clear and redraw
                Console.Clear();
                foreach (var player in Players)
                {
                   Console.WriteLine($"Player: {player.Name}, X: {player.Coordinates.X.Value}, Y: {player.Coordinates.Y.Value}");
+                  var coord = player.Coordinates;
+                  var surroundingCoords = World.GetSurroundingCoordinates(coord).ToArray();
+                  World.Display(surroundingCoords);
                }
+
                var rendered = Render(World);
                Console.WriteLine(rendered);
                Console.WriteLine($"Generation: {(runningCycles - loopCount):N0}");
@@ -64,7 +68,7 @@ namespace GameEngine
                Console.WriteLine($"Generation: {((runningCycles - loopCount) + 1):N0}");
             }
             // Add a small delay to see the animation
-            // System.Threading.Thread.Sleep(250);
+            System.Threading.Thread.Sleep(250);
 
             loopCount--;
          }

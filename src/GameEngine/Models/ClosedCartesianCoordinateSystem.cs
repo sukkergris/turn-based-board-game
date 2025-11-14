@@ -4,10 +4,10 @@
    {
       public readonly uint XLength;
       public readonly uint YLength;
-      public ClosedCartesianCoordinateSystem(uint xLength, uint yLenght)
+      public ClosedCartesianCoordinateSystem(uint xLength, uint yLength)
       {
          XLength = xLength;
-         YLength = yLenght;
+         YLength = yLength;
       }
 
       public int AutoCorrectXCoordinate(int proposedCoordinate) => AutoCorrectCoordinate(proposedCoordinate, (int)XLength);
