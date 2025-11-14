@@ -1,22 +1,12 @@
-﻿using Functional.Makeup;
+﻿namespace GameEngine.Models;
 
-namespace GameEngine.Models
+public record XCoordinate(uint Value)
 {
-   public class XCoordinate : ValueObject<XCoordinate>
-   {
-      public readonly uint Value;
-      private XCoordinate(uint x)
-      {
-         Value = x;
-      }
-      public static XCoordinate Create(uint x) => new XCoordinate(x);
-      public static Result<XCoordinate> Create(int x)
-      {
-         return Result.Ok(new XCoordinate((uint)System.Math.Abs(x)));
-      }
+    public static XCoordinate Create(uint x) => new XCoordinate(x);
 
-      protected override bool EqualsCore(XCoordinate other) => other.Value == Value;
-
-      protected override int GetHashCodeCore() => Value.GetHashCode();
-   }
+    public static XCoordinate Create(int x, ClosedCartesianCoordinateSystem system)
+    {
+        int correctedX = system.AutoCorrectXCoordinate(x);
+        return new XCoordinate((uint)correctedX);
+    }
 }

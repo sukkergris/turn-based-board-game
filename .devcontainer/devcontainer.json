@@ -26,7 +26,14 @@
       },
       "extensions": [
         "ms-vscode-remote.remote-containers",
-        "Elmtooling.elm-ls-vscode"
+        "Elmtooling.elm-ls-vscode",
+        "esbenp.prettier-vscode",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.csharp",
+        "streetsidesoftware.code-spell-checker-danish",
+        "EditorConfig.EditorConfig",
+        "csharpier.csharpier-vscode"
       ]
     }
   },

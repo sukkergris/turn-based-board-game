@@ -1,17 +1,12 @@
-﻿using Functional.Makeup;
-using System;
+﻿namespace GameEngine.Models;
 
-namespace GameEngine.Models
+public record YCoordinate(uint Value)
 {
-   public record YCoordinate(uint Value)
-   {
-      public static YCoordinate Create(uint y) => new YCoordinate(y);
-      public static Result<YCoordinate> Create(int y, ClosedCartesianCoordinateSystem system)
-      {
-         return y switch
-         {
+    public static YCoordinate Create(uint y) => new YCoordinate(y);
 
-         };
-      }
-   }
+    public static YCoordinate Create(int y, ClosedCartesianCoordinateSystem system)
+    {
+        int correctedY = system.AutoCorrectYCoordinate(y);
+        return new YCoordinate((uint)correctedY);
+    }
 }

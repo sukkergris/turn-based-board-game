@@ -1,93 +1,101 @@
-﻿using GameEngine.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using GameEngine.Models;
 
-namespace GameEngine
+namespace GameEngine;
+
+public class World(ClosedCartesianCoordinateSystem coordinateSystem)
 {
-   public class World
-   {
-      public readonly ClosedCartesianCoordinateSystem CoordinateSystem;
-      public World(ClosedCartesianCoordinateSystem coordinateSystem)
-      {
-         CoordinateSystem = coordinateSystem;
-      }
+    public readonly ClosedCartesianCoordinateSystem CoordinateSystem = coordinateSystem;
 
-      public Dictionary<ClosedCoordinates, Square> Squares { get; set; }
+    public Dictionary<ClosedCoordinates, Square> Squares { get; set; } =
+        new Dictionary<ClosedCoordinates, Square>();
 
-      public ClosedCoordinates[] GetSurroundingCoordinates(ClosedCoordinates c)
-      {
-         var surroundingCoords = new List<ClosedCoordinates>();
-         var centerX = (int)c.X.Value;
-         var centerY = (int)c.Y.Value;
+    public ClosedCoordinates[] GetSurroundingCoordinates(ClosedCoordinates c)
+    {
+        var surroundingCoords = new List<ClosedCoordinates>();
+        var centerX = (int)c.X.Value;
+        var centerY = (int)c.Y.Value;
 
-         // Generate all 8 surrounding coordinates (3x3 grid minus center)
-         for (int deltaX = -1; deltaX <= 1; deltaX++)
-         {
+        // Generate all 8 surrounding coordinates (3x3 grid minus center)
+        for (int deltaX = -1; deltaX <= 1; deltaX++)
+        {
             for (int deltaY = -1; deltaY <= 1; deltaY++)
             {
-               // Skip the center coordinate
-               if (deltaX == 0 && deltaY == 0)
-                  continue;
+                // Skip the center coordinate
+                if (deltaX == 0 && deltaY == 0)
+                    continue;
 
-               var newX = CoordinateSystem.AutoCorrectXCoordinate(centerX + deltaX);
-               var newY = CoordinateSystem.AutoCorrectYCoordinate(centerY + deltaY);
+                var newX = CoordinateSystem.AutoCorrectXCoordinate(centerX + deltaX);
+                var newY = CoordinateSystem.AutoCorrectYCoordinate(centerY + deltaY);
 
-               surroundingCoords.Add(ClosedCoordinates.Create((uint)newX, (uint)newY));
+                surroundingCoords.Add(ClosedCoordinates.Create((uint)newX, (uint)newY));
             }
-         }
+        }
 
-         return surroundingCoords.ToArray();
-      }
-      public string Display() => Display(new ClosedCoordinates[0]);
+        return surroundingCoords.ToArray();
+    }
 
-      public string Display(ClosedCoordinates[] squares)
-      {
-         string output = "Board:\n\n";
+    public string Display() => Display(Array.Empty<ClosedCoordinates>());
 
-         foreach (var plot in squares)
-         {
+    public string Display(ClosedCoordinates[] squares)
+    {
+        string output = "Board:\n\n";
+
+        foreach (var plot in squares)
+        {
             var square = Squares.First(s => s.Key == plot);
 
             square.Value.ActionInfo = "X-Mark the spot";
+        }
 
-         }
-
-         foreach (KeyValuePair<ClosedCoordinates, Square>[] row in FilterForCartesianDisplay(Squares, CoordinateSystem).Chunk((int)CoordinateSystem.XLength))
-         {
+        foreach (
+            KeyValuePair<ClosedCoordinates, Square>[] row in FilterForCartesianDisplay(
+                    Squares,
+                    CoordinateSystem
+                )
+                .Chunk((int)CoordinateSystem.XLength)
+        )
+        {
             output += PrintRow(row.ToArray());
-         }
-         return output;
-      }
+        }
+        return output;
+    }
 
-      public KeyValuePair<ClosedCoordinates, Square>[] FilterForCartesianDisplay(Dictionary<ClosedCoordinates, Square> coordinates, ClosedCartesianCoordinateSystem coordinateSystem)
-      {
-         var x = coordinateSystem.XLength;
-         List<KeyValuePair<ClosedCoordinates, Square>[]> filtered = new List<KeyValuePair<ClosedCoordinates, Square>[]>();
-         for (int i = 0; i < x; i++)
-         {
+    public KeyValuePair<ClosedCoordinates, Square>[] FilterForCartesianDisplay(
+        Dictionary<ClosedCoordinates, Square> coordinates,
+        ClosedCartesianCoordinateSystem coordinateSystem
+    )
+    {
+        var x = coordinateSystem.XLength;
+        List<KeyValuePair<ClosedCoordinates, Square>[]> filtered =
+            new List<KeyValuePair<ClosedCoordinates, Square>[]>();
+        for (int i = 0; i < x; i++)
+        {
             var selected = coordinates.Where((c, iterator) => iterator % x == i).ToArray();
             filtered.Add(selected);
-         }
-         filtered.Reverse();
-         return filtered.SelectMany(c => c).ToArray();
-      }
-      private string PrintRow(KeyValuePair<ClosedCoordinates, Square>[] row)
-      {
-         string output = string.Empty;
-         foreach (var (_, square) in row)
-         {
-            output += $"|x:{square.Coordinates.X.Value},y:{square.Coordinates.Y.Value}| {square.ActionInfo} | ";
-         }
+        }
+        filtered.Reverse();
+        return filtered.SelectMany(c => c).ToArray();
+    }
 
-         output += "\n";
-         return output;
-      }
+    private string PrintRow(KeyValuePair<ClosedCoordinates, Square>[] row)
+    {
+        string output = string.Empty;
+        foreach (var (_, square) in row)
+        {
+            output +=
+                $"|x:{square.Coordinates.X.Value},y:{square.Coordinates.Y.Value}| {square.ActionInfo} | ";
+        }
 
-      public ClosedCoordinates CreateFrom(int x, int y)
-      {
-         var correctedX = (uint)CoordinateSystem.AutoCorrectXCoordinate(x);
-         var correctedY = (uint)CoordinateSystem.AutoCorrectYCoordinate(y);
-         return ClosedCoordinates.Create(correctedX, correctedY);
-      }
-   }
+        output += "\n";
+        return output;
+    }
+
+    public ClosedCoordinates CreateFrom(int x, int y)
+    {
+        var correctedX = (uint)CoordinateSystem.AutoCorrectXCoordinate(x);
+        var correctedY = (uint)CoordinateSystem.AutoCorrectYCoordinate(y);
+        return ClosedCoordinates.Create(correctedX, correctedY);
+    }
 }

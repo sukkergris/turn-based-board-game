@@ -1,0 +1,8 @@
+{
+  "[csharp]": {
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "files.autoSave": "onFocusChange",
+    "editor.defaultFormatter": "csharpier.csharpier-vscode"
+  }
+}

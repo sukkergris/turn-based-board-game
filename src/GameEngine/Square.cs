@@ -8,6 +8,6 @@
       }
 
       public ClosedCoordinates Coordinates { get; }
-      public string ActionInfo { get; set; }
+      public string ActionInfo { get; set; } = string.Empty;
    }
 }
