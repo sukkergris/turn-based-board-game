@@ -1,7 +1,6 @@
 ﻿using GameEngine.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace GameEngine
 {
@@ -18,18 +17,18 @@ namespace GameEngine
       public ClosedCoordinates[] GetSurroundingCoordinates(ClosedCoordinates c)
       {
          var xcoordinates = new int[3] {
-            CoordinateSystem.AutoCorrectCoordinate(-1 + (int)c.X.Value, (int)CoordinateSystem.XLength),
+            CoordinateSystem.AutoCorrectXCoordinate(-1 + (int)c.X.Value),
             (int)c.X.Value,
-            CoordinateSystem.AutoCorrectCoordinate((int)c.X.Value + 1, (int)CoordinateSystem.XLength)
+            CoordinateSystem.AutoCorrectYCoordinate((int)c.X.Value + 1)
          };
          var ycoordinates = new int[3] {
-            CoordinateSystem.AutoCorrectCoordinate((int)c.Y.Value - 1, (int)CoordinateSystem.YLength),
+            CoordinateSystem.AutoCorrectXCoordinate((int)c.Y.Value - 1),
             (int)c.Y.Value,
-            CoordinateSystem.AutoCorrectCoordinate((int)c.Y.Value + 1, (int)CoordinateSystem.YLength)
+            CoordinateSystem.AutoCorrectYCoordinate((int)c.Y.Value + 1)
          };
 
          var coordinates = xcoordinates.SelectMany(x => ycoordinates.Select(y =>
-            new ClosedCoordinates(XCoordinate.Create((uint)x), YCoordinate.Create((uint)y))
+            ClosedCoordinates.Create((uint)x, (uint)y)
          )).ToArray();
          return coordinates;
       }
@@ -65,6 +64,13 @@ namespace GameEngine
 
          output += "\n";
          return output;
+      }
+
+      public ClosedCoordinates CreateFrom(int x, int y)
+      {
+         var correctedX = (uint)CoordinateSystem.AutoCorrectXCoordinate(x);
+         var correctedY = (uint)CoordinateSystem.AutoCorrectYCoordinate(y);
+         return ClosedCoordinates.Create(correctedX, correctedY);
       }
    }
 }

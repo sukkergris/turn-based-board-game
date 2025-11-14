@@ -10,7 +10,9 @@
          YLength = yLenght;
       }
 
-      public int AutoCorrectCoordinate(int proposedCoordinate, int length) => proposedCoordinate switch
+      public int AutoCorrectXCoordinate(int proposedCoordinate) => AutoCorrectCoordinate(proposedCoordinate, (int)XLength);
+      public int AutoCorrectYCoordinate(int proposedCoordinate) => AutoCorrectCoordinate(proposedCoordinate, (int)YLength);
+      int AutoCorrectCoordinate(int proposedCoordinate, int length) => proposedCoordinate switch
       {
          < 0 => length - 1,
          int i when i > (length - 1) => 0,

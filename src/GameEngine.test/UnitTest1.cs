@@ -9,14 +9,14 @@ namespace GameEngine.test
       public void Test1()
       {
          var sut = new WorldBuilder().Build(3, 3);
-         var shouldBeZero = sut.CoordinateSystem.AutoCorrectCoordinate(0, (int)sut.CoordinateSystem.XLength);
+         var shouldBeZero = sut.CoordinateSystem.AutoCorrectXCoordinate(0);
          Assert.Equal(0, shouldBeZero);
-         var shouldBeZero2 = sut.CoordinateSystem.AutoCorrectCoordinate(8, (int)sut.CoordinateSystem.YLength);
+         var shouldBeZero2 = sut.CoordinateSystem.AutoCorrectYCoordinate(8);
          Assert.Equal(0, shouldBeZero2);
-         var shouldBeOne = sut.CoordinateSystem.AutoCorrectCoordinate(1, (int)sut.CoordinateSystem.XLength);
+         var shouldBeOne = sut.CoordinateSystem.AutoCorrectXCoordinate(1);
          Assert.Equal(1, shouldBeOne);
-         var shouldBeSeven = sut.CoordinateSystem.AutoCorrectCoordinate(-1, (int)sut.CoordinateSystem.YLength);
-         Assert.Equal(7, shouldBeSeven);
+         var shouldBeTwo = sut.CoordinateSystem.AutoCorrectYCoordinate(-1);
+         Assert.Equal(2, shouldBeTwo);
       }
       [Fact]
       public void Test2()
