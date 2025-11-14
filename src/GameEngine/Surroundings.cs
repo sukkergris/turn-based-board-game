@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace GameEngine;
 
-namespace GameEngine
+public class Surroundings
 {
-   public class Surroundings
-   {
-      public Surroundings(List<Square> squares)
-      {
-
-      }
-   }
+    public Surroundings(List<Square> squares) { }
 }

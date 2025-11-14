@@ -22,14 +22,14 @@ public class Engine
 
     public void Initialize()
     {
-        bool noPrint = false;
         // Setup world
         // Add players
         AddPlayer(PlayerBuilder.Hans(World));
         // AddPlayer();
 
         // Game loop
-        int runningCycles = 1_000;
+        bool noPrint = false;
+        int runningCycles = 10;
         int loopCount = runningCycles;
         while (loopCount > 0)
         {
