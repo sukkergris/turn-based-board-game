@@ -12,11 +12,10 @@
 
       public int AutoCorrectXCoordinate(int proposedCoordinate) => AutoCorrectCoordinate(proposedCoordinate, (int)XLength);
       public int AutoCorrectYCoordinate(int proposedCoordinate) => AutoCorrectCoordinate(proposedCoordinate, (int)YLength);
-      int AutoCorrectCoordinate(int proposedCoordinate, int length) => proposedCoordinate switch
+      int AutoCorrectCoordinate(int proposedCoordinate, int length)
       {
-         < 0 => (length + proposedCoordinate % length) == 3 ? 0 : (length + proposedCoordinate % length),
-         int i when i > (length - 1) => proposedCoordinate % length,
-         _ => proposedCoordinate
-      };
+         var result = proposedCoordinate % length;
+         return result < 0 ? result + length : result;
+      }
    }
 }
