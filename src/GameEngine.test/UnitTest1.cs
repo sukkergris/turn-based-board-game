@@ -81,7 +81,7 @@ public class UnitTest1
     public void GameOn()
     {
         var world = new WorldBuilder().Build(3, 3);
-        var sut = new Engine(world, new Printer());
+        var sut = new Engine(world, new Printer(), new EngineConfiguration());
         sut.Initialize();
         var rendered = sut.Render(world);
 

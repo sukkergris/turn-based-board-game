@@ -29,7 +29,10 @@ public class ActAction
         return next;
     }
 
-    public ClosedCoordinates NextRandomCoordinate(Vector direction, ClosedCoordinates origin)
+    public ClosedCoordinates NextRandomCoordinate(
+        Vector direction,
+        ClosedCoordinates origin
+    )
     {
         var correctedX = World.CoordinateSystem.AutoCorrectXCoordinate(
             Helpers.Random() + (int)origin.X.Value

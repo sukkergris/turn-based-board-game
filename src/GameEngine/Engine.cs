@@ -5,11 +5,13 @@ namespace GameEngine;
 public class Engine
 {
     private readonly IPrint printer;
+    private readonly EngineConfiguration config;
 
-    public Engine(World world, IPrint printer)
+    public Engine(World world, IPrint printer, EngineConfiguration config)
     {
         World = world;
         this.printer = printer;
+        this.config = config;
     }
 
     public List<Player> Players { get; private set; } = new List<Player>();
@@ -60,18 +62,24 @@ public class Engine
                         printer
                     );
                     var coord = player.Coordinates;
-                    var surroundingCoords = World.GetSurroundingCoordinates(coord).ToArray();
+                    var surroundingCoords = World
+                        .GetSurroundingCoordinates(coord)
+                        .ToArray();
                     World.Display(surroundingCoords);
                 }
 
                 var rendered = Render(World);
                 rendered.Print(printer);
-                $"Generation: {(runningCycles - loopCount):N0}".Print(printer);
+                $"Generation: {runningCycles - loopCount + 1:N0}".Print(
+                    printer
+                );
             }
             else
             {
                 printer.Clear();
-                $"Generation: {((runningCycles - loopCount) + 1):N0}".Print(printer);
+                $"Generation: {runningCycles - loopCount + 1:N0}".Print(
+                    printer
+                );
             }
             // Add a small delay to see the animation
             Thread.Sleep(250);
@@ -87,7 +95,9 @@ public class Engine
 
         foreach (var item in statistics)
         {
-            $"Count: {item.Count} X: {item.Cord.X.Value}, Y: {item.Cord.Y.Value}".Print(printer);
+            $"Count: {item.Count} X: {item.Cord.X.Value}, Y: {item.Cord.Y.Value}".Print(
+                printer
+            );
         }
     }
 
