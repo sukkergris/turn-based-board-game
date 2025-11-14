@@ -1,10 +1,15 @@
-﻿namespace GameEngine;
+﻿using GameEngine.Utility;
+
+namespace GameEngine;
 
 public class Engine
 {
-    public Engine(World world)
+    private readonly IPrint printer;
+
+    public Engine(World world, IPrint printer)
     {
         World = world;
+        this.printer = printer;
     }
 
     public List<Player> Players { get; private set; } = new List<Player>();
@@ -51,8 +56,8 @@ public class Engine
                 Console.Clear();
                 foreach (var player in Players)
                 {
-                    Console.WriteLine(
-                        $"Player: {player.Name}, X: {player.Coordinates.X.Value}, Y: {player.Coordinates.Y.Value}"
+                    $"Player: {player.Name}, X: {player.Coordinates.X.Value}, Y: {player.Coordinates.Y.Value}".Print(
+                        printer
                     );
                     var coord = player.Coordinates;
                     var surroundingCoords = World.GetSurroundingCoordinates(coord).ToArray();
@@ -60,16 +65,16 @@ public class Engine
                 }
 
                 var rendered = Render(World);
-                Console.WriteLine(rendered);
-                Console.WriteLine($"Generation: {(runningCycles - loopCount):N0}");
+                rendered.Print(printer);
+                $"Generation: {(runningCycles - loopCount):N0}".Print(printer);
             }
             else
             {
-                Console.Clear();
-                Console.WriteLine($"Generation: {((runningCycles - loopCount) + 1):N0}");
+                printer.Clear();
+                $"Generation: {((runningCycles - loopCount) + 1):N0}".Print(printer);
             }
             // Add a small delay to see the animation
-            System.Threading.Thread.Sleep(250);
+            Thread.Sleep(250);
 
             loopCount--;
         }
@@ -82,9 +87,7 @@ public class Engine
 
         foreach (var item in statistics)
         {
-            Console.WriteLine(
-                $"Count: {item.Count} X: {item.Cord.X.Value}, Y: {item.Cord.Y.Value}"
-            );
+            $"Count: {item.Count} X: {item.Cord.X.Value}, Y: {item.Cord.Y.Value}".Print(printer);
         }
     }
 
