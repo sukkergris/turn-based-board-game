@@ -14,8 +14,8 @@
       public int AutoCorrectYCoordinate(int proposedCoordinate) => AutoCorrectCoordinate(proposedCoordinate, (int)YLength);
       int AutoCorrectCoordinate(int proposedCoordinate, int length) => proposedCoordinate switch
       {
-         < 0 => length - 1,
-         int i when i > (length - 1) => 0,
+         < 0 => (length + proposedCoordinate % length) == 3 ? 0 : (length + proposedCoordinate % length),
+         int i when i > (length - 1) => proposedCoordinate % length,
          _ => proposedCoordinate
       };
    }

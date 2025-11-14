@@ -17,6 +17,7 @@ namespace GameEngine.test
          Assert.Equal(1, shouldBeOne);
          var shouldBeTwo = sut.CoordinateSystem.AutoCorrectYCoordinate(-1);
          Assert.Equal(2, shouldBeTwo);
+         var shouldBe = sut.CoordinateSystem.AutoCorrectXCoordinate(-2);
       }
       [Fact]
       public void Test2()
