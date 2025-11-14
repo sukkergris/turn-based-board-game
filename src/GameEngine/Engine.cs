@@ -50,7 +50,7 @@ public class Engine
                 player.Move(action);
                 player.Act(action);
             }
-            if (noPrint)
+            if (!noPrint)
             {
                 // Clear and redraw
                 Console.Clear();
