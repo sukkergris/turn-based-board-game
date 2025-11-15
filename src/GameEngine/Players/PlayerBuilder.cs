@@ -26,5 +26,5 @@ public static class PlayerBuilder
                      new ClosedCoordinates(
                         XCoordinate.Create(6U),
                         YCoordinate.Create(1U))),
-         "Peter");
+         "Klas");
 }

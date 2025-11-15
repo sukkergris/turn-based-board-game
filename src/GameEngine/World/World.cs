@@ -46,7 +46,7 @@ public class World(ClosedCartesianCoordinateSystem coordinateSystem)
         {
             var square = Squares.First(s => s.Key == plot);
 
-            square.Value.ActionInfo = "X-Mark the spot";
+            square.Value.ActionInfo = "       X       ";
         }
 
         foreach (

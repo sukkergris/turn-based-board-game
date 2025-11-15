@@ -32,11 +32,12 @@ public class Engine
         // Setup world
         // Add players
         AddPlayer(PlayerBuilder.Hans(World));
+        AddPlayer(PlayerBuilder.Peter(World));
         // AddPlayer();
 
         // Game loop
         bool noPrint = false;
-        int runningCycles = 10;
+        int runningCycles = 1000;
         int loopCount = runningCycles;
         while (loopCount > 0)
         {
@@ -61,11 +62,11 @@ public class Engine
                     $"Player: {player.Name}, X: {player.Coordinates.X.Value}, Y: {player.Coordinates.Y.Value}".Print(
                         printer
                     );
-                    var coord = player.Coordinates;
-                    var surroundingCoords = World
-                        .GetSurroundingCoordinates(coord)
-                        .ToArray();
-                    World.Display(surroundingCoords);
+                    // var coord = player.Coordinates;
+                    // var surroundingCoords = World
+                    //     .GetSurroundingCoordinates(coord)
+                    //     .ToArray();
+                    // World.Display(surroundingCoords);
                 }
 
                 var rendered = Render(World);
@@ -95,9 +96,7 @@ public class Engine
 
         foreach (var item in statistics)
         {
-            $"Count: {item.Count} X: {item.Cord.X.Value}, Y: {item.Cord.Y.Value}".Print(
-                printer
-            );
+            $"Count: {item.Count} X: {item.Cord.X.Value}, Y: {item.Cord.Y.Value}".Print(printer);
         }
     }
 
